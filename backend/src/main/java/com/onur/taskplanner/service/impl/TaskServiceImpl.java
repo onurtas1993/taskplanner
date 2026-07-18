@@ -1,6 +1,7 @@
 package com.onur.taskplanner.service.impl;
 
 import com.onur.taskplanner.domain.CreateTaskRequest;
+import com.onur.taskplanner.domain.UpdateTaskRequest;
 import com.onur.taskplanner.domain.entity.Task;
 import com.onur.taskplanner.domain.entity.TaskStatus;
 import com.onur.taskplanner.repository.TaskRepository;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.Instant;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class TaskServiceImpl implements TaskService {
@@ -41,5 +43,19 @@ public class TaskServiceImpl implements TaskService {
     @Override
     public List<Task> listTasks() {
         return taskRepository.findAll(Sort.by(Sort.Direction.ASC, "created"));
+    }
+
+    @Override
+    public Task updateTask(UUID taskId, UpdateTaskRequest request) {
+        Task task = taskRepository.findById(taskId).orElseThrow();
+        task.setTitle(request.title());
+        task.setDescription(request.description());
+        task.setDueDate(request.dueDate());
+        task.setStatus(request.status());
+        task.setPriority(request.priority());
+        task.setUpdated(Instant.now());
+        taskRepository.save(task);
+
+        return task;
     }
 }
