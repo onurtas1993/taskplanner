@@ -1,10 +1,12 @@
 # Task Planner API
 
-A simple REST API for creating, listing, updating, and deleting tasks. Built with Java 25, Spring Boot, Spring Data JPA, and an in-memory H2 database.
+A simple REST API for creating, listing, updating, and deleting tasks. Built with Java 25, Spring Boot, Spring Data JPA, and PostgreSQL.
 
 ## Run locally
 
-Requirements: Java 25.
+Requirements: Java 25 and PostgreSQL with a `taskplanner` database.
+
+Database settings can be overridden with `DB_URL`, `DB_USERNAME`, and `DB_PASSWORD`.
 
 ```bash
 ./mvnw spring-boot:run
