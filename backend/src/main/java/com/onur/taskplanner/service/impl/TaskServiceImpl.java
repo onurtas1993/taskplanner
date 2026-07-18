@@ -4,6 +4,7 @@ import com.onur.taskplanner.domain.CreateTaskRequest;
 import com.onur.taskplanner.domain.UpdateTaskRequest;
 import com.onur.taskplanner.domain.entity.Task;
 import com.onur.taskplanner.domain.entity.TaskStatus;
+import com.onur.taskplanner.exception.TaskNotFoundException;
 import com.onur.taskplanner.repository.TaskRepository;
 import com.onur.taskplanner.service.TaskService;
 import org.springframework.data.domain.Sort;
@@ -47,7 +48,7 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public Task updateTask(UUID taskId, UpdateTaskRequest request) {
-        Task task = taskRepository.findById(taskId).orElseThrow();
+        Task task = taskRepository.findById(taskId).orElseThrow(() -> new TaskNotFoundException(taskId));
         task.setTitle(request.title());
         task.setDescription(request.description());
         task.setDueDate(request.dueDate());
